@@ -9,9 +9,39 @@
     },
     "version" : "0.1"
   },
+
+  "tags": [
+    {
+      "name": "authorization",
+      "description": "Create an authorization token to connect to Apache Cassandra"
+    },
+    {
+      "name": "probes",
+      "description": "Determine whether Apache Cassandra can receive requests"
+    },
+    {
+      "name": "operations",
+      "description": "Send operational requests to Apache Cassandra"
+    },
+    {
+      "name": "lifecycle",
+      "description": "Start, stop, configure Apache Cassandra service lifecycle"
+    },
+    {
+      "name": "metadata",
+      "description": "Returns Apache Cassandra metadata"
+    }
+  ],
+
+"externalDocs" : {
+  "description" : "DataStax Kubernetes Operator for Apache Cassandra Documentation",
+  "url" : "https://docs.datastax.com/en/cass-operator/doc/cass-operator/cassOperatorTOC.html"
+},
+
   "paths" : {
     "/api/v0/ops/auth/role" : {
       "post" : {
+        "tags" : "authorization",
         "summary" : "Creates a new user role",
         "operationId" : "createRole",
         "parameters" : [ {
@@ -51,6 +81,7 @@
     },
     "/api/v0/probes/liveness" : {
       "get" : {
+        "tags" : "probes",
         "summary" : "Indicates whether this service is running",
         "operationId" : "checkLiveness",
         "responses" : {
@@ -65,6 +96,7 @@
     },
     "/api/v0/probes/readiness" : {
       "get" : {
+        "tags" : "probes",
         "summary" : "Indicates whether the Cassandra service is ready to service requests",
         "operationId" : "checkReadiness",
         "responses" : {
@@ -79,6 +111,7 @@
     },
     "/api/v0/probes/cluster" : {
       "get" : {
+        "tags" : "probes",
         "summary" : "Indicated whether the Cassandra cluster is able to achieve the specified consistency",
         "operationId" : "checkClusterConsistency",
         "parameters" : [ {
@@ -107,6 +140,7 @@
     },
     "/api/v0/ops/seeds/reload" : {
       "post" : {
+        "tags" : "operations",
         "operationId" : "seedReload",
         "responses" : {
           "default" : {
@@ -120,6 +154,7 @@
     },
     "/api/v0/ops/keyspace/refresh" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Load newly placed SSTables to the system without restart",
         "operationId" : "refresh",
         "parameters" : [ {
@@ -147,6 +182,7 @@
     },
     "/api/v0/ops/keyspace/cleanup" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Triggers the immediate cleanup of keys no longer belonging to a node. By default, clean all keyspaces",
         "operationId" : "cleanup",
         "requestBody" : {
@@ -170,6 +206,7 @@
     },
     "/api/v0/lifecycle/start" : {
       "post" : {
+        "tags" : "lifecycle",
         "description" : "Starts Cassandra",
         "operationId" : "startNode",
         "parameters" : [ {
@@ -197,6 +234,7 @@
     },
     "/api/v0/lifecycle/stop" : {
       "post" : {
+        "tags" : "lifecycle",
         "description" : "Stops Cassandra. Keeps node from restarting automatically until /start is called",
         "operationId" : "stopNode",
         "responses" : {
@@ -211,6 +249,7 @@
     },
     "/api/v0/lifecycle/configure" : {
       "post" : {
+        "tags" : "lifecycle",
         "description" : "Configure Cassandra. Will fail if Cassandra is already started",
         "operationId" : "configureNode",
         "parameters" : [ {
@@ -241,6 +280,7 @@
     },
     "/api/v0/lifecycle/pid" : {
       "get" : {
+        "tags" : "lifecycle",
         "description" : "The PID of Cassandra, if it's running",
         "operationId" : "getPID",
         "responses" : {
@@ -255,6 +295,7 @@
     },
     "/api/v0/metadata/versions/release" : {
       "get" : {
+        "tags" : "metadata",
         "summary" : "Returns the Cassandra release version",
         "operationId" : "getReleaseVersion",
         "responses" : {
@@ -269,6 +310,7 @@
     },
     "/api/v0/metadata/endpoints" : {
       "get" : {
+        "tags" : "metadata",
         "summary" : "Returns this nodes view of the endpoint states of nodes",
         "operationId" : "getEndpointStates",
         "responses" : {
@@ -283,6 +325,7 @@
     },
     "/api/v0/ops/node/drain" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Drain the node (stop accepting writes and flush all tables)",
         "operationId" : "drain",
         "responses" : {
@@ -297,6 +340,7 @@
     },
     "/api/v0/ops/node/compaction" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Set the MB/s throughput cap for compaction in the system, or 0 to disable throttling",
         "operationId" : "setCompactionThroughput",
         "parameters" : [ {
@@ -319,6 +363,7 @@
     },
     "/api/v0/ops/node/assassinate" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Forcefully remove a dead node without re-replicating any data. Use as a last resort if you cannot removenode",
         "operationId" : "assassinate",
         "parameters" : [ {
@@ -340,6 +385,7 @@
     },
     "/api/v0/ops/node/logging" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Set the log level threshold for a given component or class. Will reset to the initial configuration if called with no parameters.",
         "operationId" : "setLoggingLevel",
         "parameters" : [ {
@@ -367,6 +413,7 @@
     },
     "/api/v0/ops/node/hints/truncate" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Truncate all hints on the local node, or truncate hints for the endpoint(s) specified.",
         "operationId" : "truncateHints",
         "parameters" : [ {
@@ -388,6 +435,7 @@
     },
     "/api/v0/ops/node/schema/reset" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Reset node's local schema and resync",
         "operationId" : "resetLocalSchema",
         "responses" : {
@@ -402,6 +450,7 @@
     },
     "/api/v0/ops/node/schema/reload" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Reload local node schema from system tables",
         "operationId" : "reloadLocalSchema",
         "responses" : {
@@ -416,6 +465,7 @@
     },
     "/api/v0/ops/node/decommission" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Decommission the *node I am connecting to*",
         "operationId" : "decommission",
         "parameters" : [ {
@@ -437,6 +487,7 @@
     },
     "/api/v0/ops/tables/compact" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Force a (major) compaction on one or more tables or user-defined compaction on given SSTables",
         "operationId" : "compact",
         "requestBody" : {
@@ -460,6 +511,7 @@
     },
     "/api/v0/ops/tables/garbagecollect" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Remove deleted data from one or more tables",
         "operationId" : "garbageCollect",
         "parameters" : [ {
@@ -490,6 +542,7 @@
     },
     "/api/v0/ops/tables/scrub" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Scrub (rebuild sstables for) one or more tables",
         "operationId" : "scrub",
         "requestBody" : {
@@ -513,6 +566,7 @@
     },
     "/api/v0/ops/tables/sstables/upgrade" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Rewrite sstables (for the requested tables) that are not on the current version (thus upgrading them to said current version)",
         "operationId" : "upgradeSSTables",
         "parameters" : [ {
@@ -543,6 +597,7 @@
     },
     "/api/v0/ops/tables/flush" : {
       "post" : {
+        "tags" : "operations",
         "summary" : "Flush one or more tables",
         "operationId" : "flush",
         "requestBody" : {
